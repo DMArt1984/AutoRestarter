@@ -43,31 +43,38 @@ namespace WindowsFormsApp1
             try
             {
                 bool SetWG = false;
-                foreach (string line in File.ReadLines("sett.txt"))
+                foreach (string line in File.ReadLines("sett.txt")) // перебор файла по строкам
                 {
-                    string[] args = line.Split(';');
-                    if (args.Length < 2)
+                    string[] args = line.Split(';'); // получение параметров строки
+
+                    if (args.Length < 2) // если параметров мало, то
                         continue;
-                    if (String.IsNullOrWhiteSpace(args[0]) || String.IsNullOrWhiteSpace(args[1]))
+                    if (String.IsNullOrWhiteSpace(args[0]) || String.IsNullOrWhiteSpace(args[1])) // если параметры пустые, то 
                         continue;
 
+                    // Что будем искать, процесс или окно
                     var Proc = false;
-                    if (args[0].Substring(0,1) == ":")
+                    if (args[0].Substring(0,1) == ":") // для процесса ставим ":" перед названием
                     {
                         Proc = true;
                         args[0] = args[0].Substring(1);
                     }
                     IsProc.Add(Proc); // Процесс (или окно)
 
+                    // Название процесса или окна
                     var Title = args[0];
                     appTitle.Add(Title); // Название процесса или окна
 
+                    // Путь к файлу приложения для запуска
                     var Path = (args[1].IndexOf(":") != 1 && args[1].IndexOf("\\\\") != 0) ? Application.StartupPath + "\\" + args[1] : args[1];
                     exePath.Add(Path); // Путь к файлу
 
+                    // Аргументы приложения
                     var Args = (args.Length >= 3 && !String.IsNullOrWhiteSpace(args[2])) ? args[2] : "";
                     exeArgs.Add(Args); // Аргументы
 
+                    // Интервал проверки запущено ли заданное приложение
+                    // Для всех приложений интервал один
                     if (args.Length >= 4 && int.Parse(args[3]) >= 1000)
                     {
                         if (SetWG == false)

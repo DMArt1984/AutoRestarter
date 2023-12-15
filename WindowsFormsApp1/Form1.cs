@@ -28,10 +28,11 @@ namespace WindowsFormsApp1
                 for (int i = 0; i < Program.MaxApp; i++)
                 {
                     var applicationExists = (Program.IsProc[i]) ? Process.GetProcesses().Any(p => p.ProcessName.Contains(Program.appTitle[i])) : Program.FindWindow(null, Program.appTitle[i]) > 0 ;
-                    Program.RUN[i] = applicationExists; // Приложение в работе!
+                    Program.RUN[i] = applicationExists; // Приложение в работе или нет
                     if (listBox1.SelectedIndex == i)
                         textBoxPath.BackColor = (applicationExists) ? Color.GreenYellow : Color.Orange;
-                    if (!applicationExists)
+
+                    if (!applicationExists) // Приложение не работает
                     {
                         if (!Program.reStart[i])
                             LogHelper.Log($" Process {Program.appTitle[i]} is not running, start...", null, true);
@@ -48,7 +49,7 @@ namespace WindowsFormsApp1
                             Program.reStart[i] = true;
                         }
                     }
-                    else
+                    else // Приложение работает
                     {
                         NumRun++;
                         Program.Attempt[i] = 0;
