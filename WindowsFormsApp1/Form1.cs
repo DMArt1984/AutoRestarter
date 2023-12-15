@@ -53,6 +53,11 @@ namespace WindowsFormsApp1
                             foo.StartInfo.Arguments = Program.exeArgs[index];
                             foo.Start();
                             Program.reStart[index] = true;
+                        } else
+                        {
+                            // Ошибка
+                            if (Program.Fault[index] == null)
+                                Program.Fault[index] = $"Приложение {Program.appTitle[index]} найти не удалось c {Program.Attempt[index]} попыток";
                         }
                     }
                     else // Приложение работает
@@ -154,30 +159,37 @@ namespace WindowsFormsApp1
             int index = listBox1.SelectedIndex;
             if (index >= 0)
             {
-                IntPtr hWnd = IntPtr.Zero;
-
-                if (Program.IsProc[index]) // Есть процесс
+                if (Program.RUN[index]) // Если приложение работает, то
                 {
-                    Process[] pc = Process.GetProcessesByName(Program.appTitle[index]);
-                    foreach (Process item in pc)
+
+                    IntPtr hWnd = IntPtr.Zero;
+                    if (Program.IsProc[index]) // Есть процесс
                     {
-                        hWnd = item.MainWindowHandle;
-                        //Console.WriteLine(Program.appTitle[index]+ " "+hWnd.ToString()+" "+ item.ToString());
+                        Process[] pc = Process.GetProcessesByName(Program.appTitle[index]);
+                        foreach (Process item in pc)
+                        {
+                            hWnd = item.MainWindowHandle;
+                            //Console.WriteLine(Program.appTitle[index]+ " "+hWnd.ToString()+" "+ item.ToString());
+                            if (hWnd != IntPtr.Zero)
+                            {
+                                Program.ShowWindow(hWnd, 4); //выносим окно на передний план
+                            }
+                        }
+                    }
+                    else // Есть название окна
+                    {
+                        hWnd = (IntPtr)Program.FindWindow(null, Program.appTitle[index]);
                         if (hWnd != IntPtr.Zero)
                         {
                             Program.ShowWindow(hWnd, 4); //выносим окно на передний план
                         }
                     }
-                } else // Есть название окна
-                {
-                    hWnd = (IntPtr)Program.FindWindow(null, Program.appTitle[index]);
-                    if (hWnd != IntPtr.Zero)
-                    {
-                        Program.ShowWindow(hWnd, 4); //выносим окно на передний план
-                    }
-                }
 
-                
+                } else // Если приложение не работает, то
+                {
+                    Program.Attempt[index] = 0; // сбрасываем счетчик попыток
+                    Program.Fault[index] = null; // сбрасываем ошибку, если была
+                }
 
             }
         }
