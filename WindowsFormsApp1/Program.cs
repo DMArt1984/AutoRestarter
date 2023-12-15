@@ -19,6 +19,7 @@ namespace WindowsFormsApp1
         static public List<bool> RUN = new List<bool>(); // 
         static public List<bool> IsProc = new List<bool>();
         static public List<ushort> Attempt = new List<ushort>();
+        static public List<string> Fault = new List<string>();
         static public int MaxApp = 0;
 
 
@@ -90,6 +91,7 @@ namespace WindowsFormsApp1
 
                     reStart.Add(false); // Значение для рестарта
                     Attempt.Add(0); // Попыток запуска
+                    Fault.Add(null); // Текст ошибки
                     RUN.Add(false); // Приложение в работе
 
                     MaxApp++;

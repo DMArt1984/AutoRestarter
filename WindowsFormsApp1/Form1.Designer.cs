@@ -36,6 +36,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.textBoxFault = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // timer1
@@ -48,19 +49,19 @@
             // 
             this.textBoxPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPath.Location = new System.Drawing.Point(12, 122);
+            this.textBoxPath.Location = new System.Drawing.Point(10, 124);
             this.textBoxPath.Multiline = true;
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.ReadOnly = true;
-            this.textBoxPath.Size = new System.Drawing.Size(324, 57);
+            this.textBoxPath.Size = new System.Drawing.Size(324, 46);
             this.textBoxPath.TabIndex = 1;
             this.textBoxPath.TabStop = false;
-            this.textBoxPath.Text = "C:\\Proj\\ConsoleOPC_UA_88\\ConsoleOPC_UA\\bin\\Debug\\TagsConnector.exe";
+            this.textBoxPath.Text = "---";
             // 
             // textBoxInterval
             // 
             this.textBoxInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxInterval.Location = new System.Drawing.Point(12, 192);
+            this.textBoxInterval.Location = new System.Drawing.Point(10, 227);
             this.textBoxInterval.Name = "textBoxInterval";
             this.textBoxInterval.ReadOnly = true;
             this.textBoxInterval.Size = new System.Drawing.Size(71, 20);
@@ -83,7 +84,7 @@
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
+            this.listBox1.Location = new System.Drawing.Point(10, 9);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(324, 109);
             this.listBox1.TabIndex = 3;
@@ -94,25 +95,42 @@
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(89, 192);
+            this.progressBar1.Location = new System.Drawing.Point(87, 227);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(247, 20);
             this.progressBar1.Step = 1;
             this.progressBar1.TabIndex = 4;
             // 
+            // textBoxFault
+            // 
+            this.textBoxFault.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxFault.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.textBoxFault.ForeColor = System.Drawing.Color.White;
+            this.textBoxFault.Location = new System.Drawing.Point(10, 174);
+            this.textBoxFault.Multiline = true;
+            this.textBoxFault.Name = "textBoxFault";
+            this.textBoxFault.ReadOnly = true;
+            this.textBoxFault.Size = new System.Drawing.Size(324, 46);
+            this.textBoxFault.TabIndex = 5;
+            this.textBoxFault.TabStop = false;
+            this.textBoxFault.Text = "---";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(342, 220);
+            this.ClientSize = new System.Drawing.Size(342, 258);
+            this.Controls.Add(this.textBoxFault);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBoxInterval);
             this.Controls.Add(this.textBoxPath);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(200, 250);
             this.Name = "Form1";
-            this.Text = "AutoRestarter";
+            this.Text = "AutoRestarter v1.1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Resize += new System.EventHandler(this.Form1_Resize);
@@ -129,6 +147,7 @@
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.TextBox textBoxFault;
     }
 }
 

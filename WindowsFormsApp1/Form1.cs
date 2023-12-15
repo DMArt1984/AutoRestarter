@@ -22,55 +22,74 @@ namespace WindowsFormsApp1
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            try
+
+            int indexList = listBox1.SelectedIndex;
+ 
+            int NumRun = 0;
+            for (int index = 0; index < Program.MaxApp; index++)
             {
-                int NumRun = 0;
-                for (int i = 0; i < Program.MaxApp; i++)
+                try
                 {
-                    var applicationExists = (Program.IsProc[i]) ? Process.GetProcesses().Any(p => p.ProcessName.Contains(Program.appTitle[i])) : Program.FindWindow(null, Program.appTitle[i]) > 0 ;
-                    Program.RUN[i] = applicationExists; // Приложение в работе или нет
-                    if (listBox1.SelectedIndex == i)
-                        textBoxPath.BackColor = (applicationExists) ? Color.GreenYellow : Color.Orange;
+                    var applicationExists = (Program.IsProc[index]) ? Process.GetProcesses().Any(p => p.ProcessName.Contains(Program.appTitle[index])) : Program.FindWindow(null, Program.appTitle[index]) > 0 ;
+
+                    //var x = Process.GetProcesses(); // для тестов
+
+                    Program.RUN[index] = applicationExists; // Приложение в работе или нет
+                    //if (listBox1.SelectedIndex == i)
+                    //    textBoxPath.BackColor = (applicationExists) ? Color.GreenYellow : Color.Orange;
 
                     if (!applicationExists) // Приложение не работает
                     {
-                        if (!Program.reStart[i])
-                            LogHelper.Log($" Process {Program.appTitle[i]} is not running, start...", null, true);
+                        if (!Program.reStart[index])
+                            LogHelper.Log($" Process {Program.appTitle[index]} is not running, start...", null, true);
 
-                        if (Program.Attempt[i] < 3) // Если попыток меньше трех
+                        if (Program.Attempt[index] < 3) // Если попыток меньше трех
                         {
-                            Program.Attempt[i]++; // Новая попытка
+                            Program.Attempt[index]++; // Новая попытка
 
                             // Запуск приложения
                             Process foo = new Process();
-                            foo.StartInfo.FileName = Program.exePath[i];
-                            foo.StartInfo.Arguments = Program.exeArgs[i];
+                            foo.StartInfo.FileName = Program.exePath[index];
+                            foo.StartInfo.Arguments = Program.exeArgs[index];
                             foo.Start();
-                            Program.reStart[i] = true;
+                            Program.reStart[index] = true;
                         }
                     }
                     else // Приложение работает
                     {
                         NumRun++;
-                        Program.Attempt[i] = 0;
-                        if (Program.reStart[i])
+                        Program.Attempt[index] = 0;
+                        if (Program.reStart[index])
                         {
-                            LogHelper.Log($" Process {Program.appTitle[i]} is running!", null, true);
-                            Program.reStart[i] = false;
+                            LogHelper.Log($" Process {Program.appTitle[index]} is running!", null, true);
+                            Program.reStart[index] = false;
                         }
 
+                        // Ошибок нет
+                        Program.Fault[index] = null;
+
                     }
+
                 }
-                progressBar1.Value = NumRun;
-                
-            } catch (Exception ex)
-            {
-                textBoxPath.Text = ex.HResult.ToString()+" \n"+ex.Message;
+                catch (Exception ex)
+                {
+                    // Ошибка
+                    Program.Fault[index] = ex.HResult.ToString() + " \n" + ex.Message;
+                }
+
+                // Обновить информацию на форме
+                if (indexList == index)
+                    Draw(indexList);
             }
+            
+            progressBar1.Value = NumRun;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            // AssemblyVersion
+
             //Starts minimized
             this.WindowState = FormWindowState.Minimized;
             // oth
@@ -114,11 +133,19 @@ namespace WindowsFormsApp1
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = listBox1.SelectedIndex;
-            if (index >= 0)
+            int indexList = listBox1.SelectedIndex;
+            Draw(indexList);
+        }
+
+        private void Draw(int index)
+        {
+            if (index >= 0 && index < Program.MaxApp)
             {
-                textBoxPath.Text = "( "+ ((Program.IsProc[index]) ? "process" : "window") +" ) "+ Program.exePath[index] + " " + Program.exeArgs[index];
+                textBoxPath.Text = "( " + ((Program.IsProc[index]) ? "process" : "window") + " ) " + Program.exePath[index] + " " + Program.exeArgs[index];
                 textBoxPath.BackColor = (Program.RUN[index]) ? Color.GreenYellow : Color.Orange;
+
+                textBoxFault.Visible = Program.Fault[index] != null;
+                textBoxFault.Text = Program.Fault[index];
             }
         }
 
