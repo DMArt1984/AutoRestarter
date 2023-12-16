@@ -132,6 +132,24 @@ namespace WindowsFormsApp1
         {
             // AssemblyVersion
 
+            #region StartControl
+            string procName = Process.GetCurrentProcess().ProcessName;
+            int c = 0;
+            Process[] processes = Process.GetProcesses();
+            foreach (Process process in processes)
+            {
+                if (process.ProcessName.Contains(procName))
+                {
+                    c++;
+                    if (c > 1)
+                    {
+                        MessageBox.Show("Уже запущена одна копия программы!", " ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        this.Close();
+                    }
+                }
+            }
+            #endregion
+
             //Starts minimized
             this.WindowState = FormWindowState.Minimized;
             // oth
