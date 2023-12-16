@@ -40,12 +40,16 @@ namespace WindowsFormsApp1
         [STAThread]
         static void Main()
         {
+            LogHelper.Log("===============================================");
+
             // Загрузка параметров
             try
             {
                 bool SetWG = false;
+                LogHelper.Log("Загрузка параметров:");
                 foreach (string line in File.ReadLines("sett.txt")) // перебор файла по строкам
                 {
+                    LogHelper.Log("--- "+line);
                     string[] args = line.Split(';'); // получение параметров строки
 
                     if (args.Length < 2) // если параметров мало, то
@@ -95,13 +99,13 @@ namespace WindowsFormsApp1
                     RUN.Add(false); // Приложение в работе
 
                     MaxApp++;
-                    LogHelper.Log($"--- {MaxApp}) Params: {Title} - {Path} {Args}", null, true);
+                    LogHelper.Log($"    {MaxApp}) Параметры: {Title} - {Path} {Args}", null, true);
                 }
-                LogHelper.Log($"WatchDog: {WatchDog}", null, true);
+                LogHelper.Log($"Периодичность: {WatchDog}", null, true);
             }
             catch (Exception ex)
             {
-                LogHelper.Log($"ERROR Params", ex, true);
+                LogHelper.Log($"Ошибка параметров: ", ex, true);
                 MessageBox.Show(ex.Message);
                 return;
             }
@@ -114,7 +118,7 @@ namespace WindowsFormsApp1
                 Application.Run(new Form1());
             } catch (Exception ex)
             {
-                LogHelper.Log($"ERROR Application", ex, true);
+                LogHelper.Log($"Ошибка приложения: ", ex, true);
                 MessageBox.Show(ex.Message);
             }
         }

@@ -42,11 +42,12 @@ namespace WindowsFormsApp1
                     if (!applicationExists) // Приложение не работает
                     {
                         if (!Program.reStart[index])
-                            LogHelper.Log($" Process {Program.appTitle[index]} is not running, start...", null, true);
+                            LogHelper.Log($" Приложение {Program.appTitle[index]} не запущено!", null, true);
 
                         if (Program.Attempt[index] < 3) // Если попыток меньше трех
                         {
                             Program.Attempt[index]++; // Новая попытка
+                            LogHelper.Log($"  Попытка запуска № {Program.Attempt[index]}", null, true);
 
                             // Запуск приложения
                             Process foo = new Process();
@@ -58,7 +59,10 @@ namespace WindowsFormsApp1
                         {
                             // Ошибка
                             if (Program.Fault[index] == null)
-                                Program.Fault[index] = $"Приложение {Program.appTitle[index]} найти не удалось c {Program.Attempt[index]} попыток";
+                            {
+                                Program.Fault[index] = $" Приложение {Program.appTitle[index]} найти не удалось c {Program.Attempt[index]} попыток";
+                                LogHelper.Log($"  {Program.Fault[index]}", null, true);
+                            }
                         }
                     }
                     else // Приложение работает
@@ -67,7 +71,7 @@ namespace WindowsFormsApp1
                         Program.Attempt[index] = 0;
                         if (Program.reStart[index])
                         {
-                            LogHelper.Log($" Process {Program.appTitle[index]} is running!", null, true);
+                            LogHelper.Log($" Приложение {Program.appTitle[index]} запущено!", null, true);
                             Program.reStart[index] = false;
                         }
 
@@ -81,6 +85,7 @@ namespace WindowsFormsApp1
                 {
                     // Ошибка
                     Program.Fault[index] = ex.HResult.ToString() + " \n" + ex.Message;
+                    LogHelper.Log($" Ошибка приложения {Program.appTitle[index]}", ex, true);
                 }
 
                 // Обновить информацию на форме
@@ -163,6 +168,8 @@ namespace WindowsFormsApp1
 
             textBoxInterval.Text = Program.WatchDog.ToString();
             timer1.Interval = Program.WatchDog;
+
+            LogHelper.Log("Окно загружено");
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -170,6 +177,7 @@ namespace WindowsFormsApp1
             notifyIcon1.Visible = false;
             this.ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
+            LogHelper.Log("USER: Показать окно");
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -178,12 +186,13 @@ namespace WindowsFormsApp1
             {
                 this.ShowInTaskbar = false;
                 notifyIcon1.Visible = true;
+                LogHelper.Log("Скрыть окно");
             }
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            LogHelper.Log($"Closed: {e.CloseReason}", null, true);
+            LogHelper.Log($"USER: Закрыть окно ({e.CloseReason})", null, true);
         }
 
         private void textBoxInterval_TextChanged(object sender, EventArgs e)
@@ -214,6 +223,7 @@ namespace WindowsFormsApp1
             int index = listBox1.SelectedIndex;
             if (index >= 0)
             {
+                LogHelper.Log($"USER: Двойной клик {Program.appTitle[index]}");
                 if (Program.RUN[index]) // Если приложение работает, то
                 {
 
@@ -259,6 +269,7 @@ namespace WindowsFormsApp1
             notifyIcon1.Visible = false;
             this.ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
+            LogHelper.Log("USER: Показать окно");
         }
     }
 }
