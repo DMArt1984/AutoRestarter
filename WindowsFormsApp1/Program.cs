@@ -17,9 +17,9 @@ namespace WindowsFormsApp1
         static public List<string> exeArgs = new List<string>(); // 
         static public List<bool> reStart = new List<bool>(); // 
         static public List<bool> RUN = new List<bool>(); // 
-        static public List<bool> IsProc = new List<bool>();
-        static public List<ushort> Attempt = new List<ushort>();
-        static public List<string> Fault = new List<string>();
+        static public List<bool> IsProc = new List<bool>(); //
+        static public List<ushort> Attempt = new List<ushort>(); //
+        static public List<string> Fault = new List<string>(); //
         static public int MaxApp = 0;
 
 

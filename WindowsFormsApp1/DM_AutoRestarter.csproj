@@ -110,6 +110,9 @@
     <None Include="icons\restart_red.ico" />
     <None Include="icons\restart_white.ico" />
     <None Include="icons\restart_yellow.ico" />
+    <Content Include="help.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="icon_start.ico" />
     <Content Include="Power - Restart.ico" />
     <None Include="Resources\ico_black.ico" />

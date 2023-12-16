@@ -92,9 +92,10 @@ namespace WindowsFormsApp1
             progressBar1.Value = NumRun;
 
             // Иконка
-            if (Program.MaxApp == 0)
+            if (Program.MaxApp <= 0)
             {
                 notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_blue;
+                notifyIcon1.Text = "Не заданы приложения для контроля";
             }
             else
             {
@@ -103,19 +104,23 @@ namespace WindowsFormsApp1
                     if (Program.Fault.Any(x => x != null))
                     {
                         notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_red;
+                        notifyIcon1.Text = "Ошибка запуска приложения";
                     }
                     else
                     {
                         notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_black;
+                        notifyIcon1.Text = "Приложения не запущены";
                     }
                 }
                 else if (NumRun == Program.MaxApp)
                 {
                     notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_green;
+                    notifyIcon1.Text = "Все приложения запущены";
                 }
                 else
                 {
                     notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_yellow;
+                    notifyIcon1.Text = "Приложения запущены частично";
                 }
             }
             
@@ -224,6 +229,18 @@ namespace WindowsFormsApp1
                 }
 
             }
+        }
+
+        private void versionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(),"Версия приложения");
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            notifyIcon1.Visible = false;
+            this.ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
         }
     }
 }
