@@ -104,8 +104,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="icons\restart_black.ico" />
+    <None Include="icons\restart_blue.ico" />
+    <None Include="icons\restart_green.ico" />
+    <None Include="icons\restart_red.ico" />
+    <None Include="icons\restart_white.ico" />
+    <None Include="icons\restart_yellow.ico" />
     <Content Include="icon_start.ico" />
     <Content Include="Power - Restart.ico" />
+    <None Include="Resources\ico_black.ico" />
     <Content Include="sett.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

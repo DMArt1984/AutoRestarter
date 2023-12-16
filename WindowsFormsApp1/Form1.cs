@@ -26,6 +26,7 @@ namespace WindowsFormsApp1
             int indexList = listBox1.SelectedIndex;
  
             int NumRun = 0;
+
             for (int index = 0; index < Program.MaxApp; index++)
             {
                 try
@@ -87,7 +88,38 @@ namespace WindowsFormsApp1
                     Draw(indexList);
             }
             
+            // Прогрессбар
             progressBar1.Value = NumRun;
+
+            // Иконка
+            if (Program.MaxApp == 0)
+            {
+                notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_blue;
+            }
+            else
+            {
+                if (NumRun == 0)
+                {
+                    if (Program.Fault.Any(x => x != null))
+                    {
+                        notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_red;
+                    }
+                    else
+                    {
+                        notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_black;
+                    }
+                }
+                else if (NumRun == Program.MaxApp)
+                {
+                    notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_green;
+                }
+                else
+                {
+                    notifyIcon1.Icon = DM_AutoRestarter.Properties.Resources.restart_yellow;
+                }
+            }
+            
+            this.Icon = notifyIcon1.Icon;
 
         }
 
