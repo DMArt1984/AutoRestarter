@@ -41,11 +41,12 @@ namespace WindowsFormsApp1
 
                     if (!applicationExists) // Приложение не работает
                     {
-                        if (!Program.reStart[index])
-                            LogHelper.Log($" Приложение {Program.appTitle[index]} не запущено!", null, true);
+                        //if (!Program.reStart[index])
+                        //    LogHelper.Log($" Приложение {Program.appTitle[index]} не запущено!", null, true);
 
                         if (Program.Attempt[index] < 3) // Если попыток меньше трех
                         {
+                            LogHelper.Log($" Приложение {Program.appTitle[index]} не запущено!", null, true);
                             Program.Attempt[index]++; // Новая попытка
                             LogHelper.Log($"  Попытка запуска № {Program.Attempt[index]}", null, true);
 
@@ -85,7 +86,7 @@ namespace WindowsFormsApp1
                 {
                     // Ошибка
                     Program.Fault[index] = ex.HResult.ToString() + " \n" + ex.Message;
-                    LogHelper.Log($" Ошибка приложения {Program.appTitle[index]}", ex, true);
+                    LogHelper.Log($"  Ошибка приложения {Program.appTitle[index]}", ex, true);
                 }
 
                 // Обновить информацию на форме
